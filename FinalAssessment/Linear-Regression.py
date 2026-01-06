@@ -20,7 +20,7 @@ print("DF.shape():  \n",DF.shape)
 
 print("DF.describe():    \n",DF.describe().round(2).T)
 
-#there was NAN values in our X_train so to remove it we will use dropna()function
+# There are missing values in the dataset, so we remove them using dropna()
 DF = DF.dropna()
 
 import seaborn as sns # Convention alias for Seaborn
@@ -126,3 +126,4 @@ print('R2: ', R2)
 """R2 also comes implemented by default into the score method of Scikit-Learn's linear regressor class. We can calculate it like this:
 """
 print(" R2 also comes implemented by default into the score method of Scikit-Learn's linear regressor class...\n", Regressor.score(X_test, y_test))
+# End of Multiple Linear Regression
