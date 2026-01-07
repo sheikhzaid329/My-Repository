@@ -15,6 +15,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 import numpy as np
+from tensorflow.keras.callbacks import EarlyStopping
 from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.layers import SimpleRNN, GRU, LSTM, Dense, Dropout
 
@@ -68,7 +69,7 @@ if  RNN_code:
     model.compile(optimizer='adam', loss='mean_squared_error',metrics = METRICS)
     
     # Training and Evaluating the Model
-    history = model.fit(X_train, y_train, epochs=10)
+    history = model.fit(X_train, y_train, epochs=10, batch_size=32, validation_split=0.1,callbacks=[EarlyStopping(monitor='val_loss', patience=10)])
 
     predictions = model.predict(X_test)
 
@@ -169,7 +170,7 @@ if  LSTM_code:
     The model is trained for 100 epochs using a batch size of 32, with 10% of the training data used for validation.
     After training the model is used to make predictions on the test set and we calculate the Root Mean Squared Error (RMSE) to evaluate performance.
     """
-    history = model.fit(X_train, y_train, epochs=100, batch_size=32, validation_split=0.1)
+    history = model.fit(X_train, y_train, epochs=100, batch_size=32, validation_split=0.1,callbacks=[EarlyStopping(monitor='val_loss', patience=10)])
 
     predictions = model.predict(X_test)
     predictions = scaler.inverse_transform(predictions).flatten()
@@ -266,7 +267,7 @@ model.compile(optimizer=Adam(learning_rate=0.001), loss='mean_squared_error',met
 model.fit(): Trains the model on the prepared dataset. The epochs=10 specifies the number of iterations over the entire dataset, and batch_size=32 defines the number of samples per batch.
 
 """
-model.fit(X, y, epochs=10, batch_size=32)
+model.fit(X, y, epochs=10, batch_size=32,validation_split=0.1,callbacks=[EarlyStopping(monitor='val_loss', patience=10)])
 
 """" Making Predictions
 Input Sequence: The code takes the last 100 Stock values from the dataset (scaled_data[-time_step:]) as an input sequence.
